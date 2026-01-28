@@ -7,7 +7,7 @@ import logic.*;
 
 public class DeckManager {
 	
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		
 		//Change initial state of cards here
 		UnitCard squirrel = new UnitCard("Squirrel", 0, 0, 1, "Sacrifices must be made.");

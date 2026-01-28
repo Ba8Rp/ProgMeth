@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import logic.CardCounter;
 import logic.UnitCard;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class CardCounterTest {
 	
 	UnitCard uc1;
