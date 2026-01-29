@@ -1,0 +1,56 @@
+@startuml
+class logic.Order {
+- ArrayList<OrderItem> orderItemList
+- {static} int totalOrderCount
+- int orderNumber
++ OrderItem addItem(Item,int)
++ int calculateOrderTotalPrice()
++ {static} int getTotalOrderCount()
++ {static} void resetTotalOrderCount()
++ int getOrderNumber()
++ ArrayList<OrderItem> getOrderItemList()
+}
+
+
+class logic.Item {
+- String name
+- int pricePerPiece
++ String getName()
++ void setName(String)
++ int getPricePerPiece()
++ void setPricePerPiece(int)
+}
+
+
+class application.MisaShop {
+- {static} ArrayList<Item> itemList
+- {static} ArrayList<Order> orderList
+- {static} boolean isEnd
+- {static} Scanner kb
++ {static} void main(String[])
++ {static} void addItemToOrder(Order,int,int)
++ {static} boolean addNewItem(String,int)
++ {static} boolean isItemExisted(String)
+- {static} void handleAddItem()
+- {static} void handleCreateNewOrder()
+- {static} void showAllItems()
+- {static} void showAllOrder()
++ {static} ArrayList<Order> getOrderList()
++ {static} void addBlankOrder()
++ {static} void initializeData()
+}
+
+
+class logic.OrderItem {
+~ Item item
+~ int itemAmount
++ Item getItem()
++ void setItem(Item)
++ int getItemAmount()
++ void setItemAmount(int)
++ void increaseItemAmount(int)
++ int calculateTotalPrice()
+}
+
+
+@enduml
