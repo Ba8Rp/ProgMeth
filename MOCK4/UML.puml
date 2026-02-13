@@ -1,0 +1,129 @@
+@startuml
+class application.Main {
++ {static} ArrayList<ProcessUnit> processUnits
++ {static} Scanner scanner
++ {static} void main(String[])
++ {static} void initTask()
++ {static} void initProcessUnit()
++ {static} void addProcessorUnit()
++ {static} void addTask()
++ {static} void showProcessorUnits()
++ {static} void showTasks(ArrayList<Task>)
++ {static} void estimateTask()
++ {static} void modifyTask()
+}
+
+
+abstract class logic.compute.ProcessUnit {
+- String modelName
+- int coreNumber
+- double clockSpeed
++ String getModelType()
++ String getModelName()
++ void setModelName(String)
++ double compute(Task)
++ double parallelCompute(Task)
++ {abstract}boolean canCompute(Task)
++ int getCoreNumber()
++ void setCoreNumber(int)
++ double getClockSpeed()
++ void setClockSpeed(double)
+}
+
+
+interface interfaces.Duplicatable {
+~ void duplicateTask(int)
+}
+
+interface interfaces.Parallelizable {
++ double parallelCompute(ProcessUnit)
+}
+
+class logic.task.CalculationTask {
++ double compute(ProcessUnit)
++ void modify(int)
++ String fullTaskName()
++ void changeWorkload(int)
+}
+
+class logic.task.TaskList {
+- {static} ArrayList<Task> tasks
++ {static} ArrayList<Task> getTasks()
++ {static} Task getTask(int)
++ {static} void setTasks(ArrayList<Task>)
++ {static} void addTasks(Task)
++ {static} void removeTask(int)
+}
+
+
+class logic.task.TaskManager {
++ {static} ArrayList<Task> getTaskByType(ArrayList<Class>)
++ {static} void deleteDuplicateTasks()
++ {static} boolean instanceOf(Class,Class)
+}
+
+class logic.task.SortTask {
++ double compute(ProcessUnit)
++ void mergeTask(int)
++ void modify(int)
++ double parallelCompute(ProcessUnit)
++ String fullTaskName()
+}
+
+class logic.compute.ComputeUnit {
++ boolean canCompute(Task)
+}
+
+class logic.task.RenderTask {
++ double compute(ProcessUnit)
++ void duplicateTask(int)
++ double parallelCompute(ProcessUnit)
++ String fullTaskName()
+}
+
+interface interfaces.Computable {
++ double compute(ProcessUnit)
+}
+
+interface interfaces.Modifiable {
++ void modify(int)
+}
+
+class logic.compute.GraphicUnit {
++ boolean canCompute(Task)
++ double compute(Task)
+}
+
+abstract class logic.task.Task {
+- String name
+- double workload
++ {abstract}String fullTaskName()
++ String toString()
++ String getName()
++ void setName(String)
++ double getWorkload()
++ void setWorkload(double)
+}
+
+
+class logic.task.SimpleTask {
++ String fullTaskName()
+}
+
+
+
+interfaces.Computable <|.. logic.task.CalculationTask
+interfaces.Modifiable <|.. logic.task.CalculationTask
+logic.task.Task <|-- logic.task.CalculationTask
+interfaces.Computable <|.. logic.task.SortTask
+interfaces.Modifiable <|.. logic.task.SortTask
+interfaces.Parallelizable <|.. logic.task.SortTask
+logic.task.Task <|-- logic.task.SortTask
+logic.compute.ProcessUnit <|-- logic.compute.ComputeUnit
+interfaces.Computable <|.. logic.task.RenderTask
+interfaces.Parallelizable <|.. logic.task.RenderTask
+interfaces.Duplicatable <|.. logic.task.RenderTask
+logic.task.Task <|-- logic.task.RenderTask
+logic.compute.ProcessUnit <|-- logic.compute.GraphicUnit
+logic.task.Task <|-- logic.task.SimpleTask
+@enduml
