@@ -1,0 +1,225 @@
+@startuml
+class logic.Customer {
+- String[] order
+- int time
+- int timeDecrementRate
+- boolean isUpset
++ String[] getOrder()
++ void setOrder(String[])
++ int getTime()
++ void setTime(int)
++ int getTimeDecrementRate()
++ void setTimeDecrementRate(int)
++ boolean verifyOrder(ArrayList<Ingredient>)
++ String toString()
++ void update()
++ boolean isUpset()
++ void setUpset(boolean)
+}
+
+
+class entity.counter.Counter {
+- String name
+- Item placedContent
++ Item getPlacedContent()
++ void setPlacedContent(Item)
++ boolean isPlacedContentEmpty()
++ void interact(Player)
++ String getName()
++ void setName(String)
++ String toString()
+}
+
+
+class entity.ingredient.Lettuce {
+- boolean chopState
++ void chop()
++ boolean isChopped()
++ boolean isChopState()
++ void setChopState(boolean)
+}
+
+
+class logic.InvalidIngredientException {
+- {static} long serialVersionUID
+}
+
+class entity.counter.DishWasher {
++ void interact(Player)
++ void update()
+}
+
+class entity.counter.Crate {
+- String myIngredient
++ String getMyIngredient()
++ void setMyIngredient(String)
++ void interact(Player)
+}
+
+
+class entity.container.Dish {
+- int dirty
++ int getDirty()
++ void setDirty(int)
++ boolean isDirty()
++ boolean verifyContent(Ingredient)
++ void clean(int)
++ String toString()
+}
+
+
+class entity.container.Pan {
++ boolean verifyContent(Ingredient)
++ void cook()
+}
+
+class entity.counter.ChoppingBoard {
++ void interact(Player)
+}
+
+class logic.StringUtil {
++ {static} String formatNamePercentage(String,int)
+}
+
+abstract class entity.base.Ingredient {
+- boolean isEdible
++ boolean isEdible()
++ void setEdible(boolean)
+}
+
+
+class entity.ingredient.Bread {
+}
+class entity.counter.Stove {
++ void interact(Player)
++ void update()
+}
+
+class logic.Player {
+- Item holdingItem
++ Item getHoldingItem()
++ void setHoldingItem(Item)
++ boolean isHandEmpty()
++ Item placeItem()
+}
+
+
+interface entity.base.Cookable {
++ void cook()
++ boolean isBurnt()
+}
+
+class entity.counter.Bin {
++ void interact(Player)
+}
+
+interface entity.base.Choppable {
++ void chop()
++ boolean isChopped()
+}
+
+abstract class entity.base.Item {
+- String name
++ String getName()
++ void setName(String)
++ int hashCode()
++ boolean equals(Object)
++ String toString()
+}
+
+
+interface entity.base.Updatable {
++ void update()
+}
+
+class logic.LogicUtil {
++ {static} Ingredient createIngredientFromName(String)
++ {static} int getRandomNumber(int)
++ {static} String[] getRandomIngredientOrder()
+}
+
+class entity.ingredient.Egg {
+- int cookedPercentage
++ void cook()
++ boolean isBurnt()
++ int getCookedPercentage()
++ void setCookedPercentage(int)
++ String toString()
+}
+
+
+class entity.ingredient.Meat {
+- boolean chopState
+- int cookedPercentage
++ void chop()
++ boolean isChopped()
++ void cook()
++ boolean isBurnt()
++ int getCookedPercentage()
++ void setCookedPercentage(int)
++ boolean isChopState()
++ void setChopState(boolean)
++ String toString()
+}
+
+
+abstract class entity.base.Container {
+- ArrayList<Ingredient> content
+- int maxCapacity
+- int capacity
++ {abstract}boolean verifyContent(Ingredient)
++ boolean addContent(Ingredient)
++ ArrayList<Ingredient> getContent()
++ void clearContent()
++ boolean isEmpty()
++ void transferContent(Container)
++ void setContent(ArrayList<Ingredient>)
++ String toString()
++ int getMaxCapacity()
++ void setMaxCapacity(int)
++ int getCapacity()
++ void setCapacity(int)
+}
+
+
+class application.Main {
+- {static} Player player
+- {static} Scanner keyBoard
+- {static} boolean isGameActive
+- {static} ArrayList<Customer> customerList
+- {static} ArrayList<Counter> kitchenList
++ {static} void main(String[])
++ {static} int getChoice()
++ {static} void startGame()
++ {static} void populateCustomer()
++ {static} void populateKitchen()
++ {static} void printArrayList(ArrayList<T>)
++ {static} void processUpdate()
++ {static} boolean serveCustomer()
+}
+
+
+
+
+entity.base.Updatable <|.. logic.Customer
+entity.base.Choppable <|.. entity.ingredient.Lettuce
+entity.base.Ingredient <|-- entity.ingredient.Lettuce
+logic.Exception <|-- logic.InvalidIngredientException
+entity.base.Updatable <|.. entity.counter.DishWasher
+entity.counter.Counter <|-- entity.counter.DishWasher
+entity.counter.Counter <|-- entity.counter.Crate
+entity.base.Container <|-- entity.container.Dish
+entity.base.Container <|-- entity.container.Pan
+entity.counter.Counter <|-- entity.counter.ChoppingBoard
+entity.base.Item <|-- entity.base.Ingredient
+entity.base.Ingredient <|-- entity.ingredient.Bread
+entity.base.Updatable <|.. entity.counter.Stove
+entity.counter.Counter <|-- entity.counter.Stove
+entity.counter.Counter <|-- entity.counter.Bin
+entity.base.Cookable <|.. entity.ingredient.Egg
+entity.base.Ingredient <|-- entity.ingredient.Egg
+entity.base.Choppable <|.. entity.ingredient.Meat
+entity.base.Cookable <|.. entity.ingredient.Meat
+entity.base.Ingredient <|-- entity.ingredient.Meat
+entity.base.Item <|-- entity.base.Container
+@enduml
